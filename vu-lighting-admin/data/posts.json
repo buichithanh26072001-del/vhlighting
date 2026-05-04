@@ -1,0 +1,20 @@
+{
+  "posts": [
+    {
+      "title": "Đèn ray nam châm 48V cho phòng khách hiện đại",
+      "category": "Ray nam châm",
+      "date": "2026-05-04",
+      "image": "/img/thanhray.jpg",
+      "excerpt": "Gợi ý phối đèn ray nam châm 48V cho phòng khách, showroom và căn hộ.",
+      "content": "Đèn ray nam châm 48V giúp không gian hiện đại, dễ thay đổi vị trí đèn và tạo điểm nhấn ánh sáng đẹp."
+    },
+    {
+      "title": "Led thanh nhôm cho tủ bếp và tủ áo",
+      "category": "Led nội thất",
+      "date": "2026-05-04",
+      "image": "/img/ledthanh.jpg",
+      "excerpt": "Led thanh nhôm giúp không gian nội thất sáng đẹp, gọn và sang hơn.",
+      "content": "Led thanh nhôm thường dùng cho tủ bếp, tủ áo, kệ trang trí, trần hắt sáng và showroom."
+    }
+  ]
+}

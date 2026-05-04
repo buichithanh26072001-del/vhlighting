@@ -1,0 +1,78 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: false
+
+media_folder: "img/uploads"
+public_folder: "/img/uploads"
+
+locale: "vi"
+
+collections:
+  - name: "noi_dung"
+    label: "Quản lý nội dung"
+    files:
+      - name: "bai_viet"
+        label: "Bài đăng hằng ngày"
+        file: "data/posts.json"
+        format: "json"
+        fields:
+          - label: "Danh sách bài viết"
+            name: "posts"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - label: "Tiêu đề"
+                name: "title"
+                widget: "string"
+              - label: "Danh mục"
+                name: "category"
+                widget: "select"
+                options:
+                  - "Ray nam châm"
+                  - "Đèn âm trần"
+                  - "Led thanh nhôm"
+                  - "Nguồn LED"
+                  - "Đèn trang trí"
+                  - "Phụ kiện LED"
+                  - "Quạt trần"
+                  - "Công trình"
+              - label: "Ngày đăng"
+                name: "date"
+                widget: "datetime"
+                format: "YYYY-MM-DD"
+                date_format: "DD/MM/YYYY"
+                time_format: false
+              - label: "Ảnh đại diện"
+                name: "image"
+                widget: "image"
+                required: false
+              - label: "Mô tả ngắn"
+                name: "excerpt"
+                widget: "text"
+              - label: "Nội dung bài viết"
+                name: "content"
+                widget: "markdown"
+
+      - name: "thong_tin_lien_he"
+        label: "Thông tin liên hệ"
+        file: "data/contact.json"
+        format: "json"
+        fields:
+          - label: "Tên cửa hàng"
+            name: "shop_name"
+            widget: "string"
+            default: "Vũ Lighting"
+          - label: "Số điện thoại / Zalo"
+            name: "phone"
+            widget: "string"
+            default: "0877933362"
+          - label: "Website"
+            name: "website"
+            widget: "string"
+            default: "vulighting.com"
+          - label: "Địa chỉ"
+            name: "address"
+            widget: "string"
+            default: "Cập nhật địa chỉ cửa hàng"
