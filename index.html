@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vũ Hoàng Lighting - Bán hàng nhanh</title>
+  <style>
+    :root {
+      --primary: #f59e0b;
+      --primary-dark: #b45309;
+      --dark: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --danger: #dc2626;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    .app {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #111827, #292524);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(17, 24, 39, 0.18);
+      margin-bottom: 16px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: #fde68a;
+      font-size: 14px;
+    }
+
+    .shop-info {
+      text-align: right;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #f9fafb;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.16);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 72px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1.1fr 0.7fr 0.8fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .full {
+      margin-bottom: 12px;
+    }
+
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 15px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #111827;
+    }
+
+    .btn-dark {
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .btn-light {
+      background: #f3f4f6;
+      color: #111827;
+      border: 1px solid var(--line);
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .btn-success {
+      background: #dcfce7;
+      color: var(--success);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .product-suggest {
+      background: #fffbeb;
+      border: 1px dashed #f59e0b;
+      color: #78350f;
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      font-size: 14px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f9fafb;
+      font-size: 13px;
+      color: #374151;
+    }
+
+    .right {
+      text-align: right;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .total-box {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .summary {
+      background: #f9fafb;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .sum-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #d1d5db;
+    }
+
+    .sum-line:last-child {
+      border-bottom: 0;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--primary-dark);
+    }
+
+    .invoice {
+      display: none;
+      background: #fff;
+      color: #111827;
+    }
+
+    .invoice-inner {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 12mm;
+      background: #fff;
+    }
+
+    .invoice-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 3px solid #111827;
+      padding-bottom: 12px;
+    }
+
+    .invoice-brand h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .invoice-brand p,
+    .invoice-meta p {
+      margin: 4px 0;
+      font-size: 13px;
+    }
+
+    .invoice-title {
+      text-align: center;
+      margin: 18px 0 14px;
+    }
+
+    .invoice-title h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .customer-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+
+    .invoice table th,
+    .invoice table td {
+      border: 1px solid #d1d5db;
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .invoice table th {
+      background: #f3f4f6;
+    }
+
+    .invoice-total {
+      width: 340px;
+      margin-left: auto;
+      margin-top: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .invoice-total div {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 12px;
+      border-bottom: 1px solid #d1d5db;
+      font-size: 14px;
+    }
+
+    .invoice-total div:last-child {
+      border-bottom: 0;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .signature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .signature strong {
+      display: block;
+      margin-bottom: 70px;
+    }
+
+    .thanks {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: 700;
+      color: #92400e;
+    }
+
+    .small-muted {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .catalog-list {
+      max-height: 280px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 22px;
+    }
+
+    @media (max-width: 900px) {
+      .grid, .total-box {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .shop-info {
+        text-align: left;
+      }
+
+      .form-row, .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .app {
+        display: none !important;
+      }
+
+      .invoice {
+        display: block !important;
+      }
+
+      .invoice-inner {
+        width: auto;
+        min-height: auto;
+        padding: 0;
+      }
+
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>VŨ HOÀNG LIGHTING</h1>
+        <p>Phần mềm bán hàng nhanh - nhập mã, in hóa đơn, gửi khách</p>
+      </div>
+      <div class="shop-info">
+        <div><strong>Hotline:</strong> 0342 245 225</div>
+        <div><strong>Địa chỉ:</strong> Cửa hàng đèn trang trí</div>
+        <div><strong>Website:</strong> vuhoanglighting.com</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. Thông tin khách hàng</h2>
+        <div class="form-row">
+          <div>
+            <label for="customerName">Tên khách hàng</label>
+            <input id="customerName" placeholder="Ví dụ: Anh Nam" />
+          </div>
+          <div>
+            <label for="customerPhone">Số điện thoại</label>
+            <input id="customerPhone" placeholder="Ví dụ: 0988..." />
+          </div>
+        </div>
+        <div class="full">
+          <label for="customerAddress">Địa chỉ</label>
+          <input id="customerAddress" placeholder="Địa chỉ giao hàng" />
+        </div>
+        <div class="full">
+          <label for="note">Ghi chú</label>
+          <textarea id="note" placeholder="Ví dụ: giao trong ngày, khách chuyển khoản..."></textarea>
+        </div>
+
+        <h2>2. Nhập mã sản phẩm</h2>
+        <div class="product-suggest">
+          <strong>Mã demo:</strong> RAY48V-01, LED12V-01, LED24V-01, NGUON24V-10A, PANEL-600, AMTRAN-7W, PHA-100W, COTNHA-01
+        </div>
+
+        <div class="form-row-3">
+          <div>
+            <label for="productCode">Mã sản phẩm</label>
+            <input id="productCode" placeholder="Nhập mã hoặc quét mã" list="productCodes" />
+            <datalist id="productCodes"></datalist>
+          </div>
+          <div>
+            <label for="quantity">Số lượng</label>
+            <input id="quantity" type="number" min="1" value="1" />
+          </div>
+          <div>
+            <label for="customPrice">Giá tùy chỉnh</label>
+            <input id="customPrice" type="number" min="0" placeholder="Bỏ trống nếu lấy giá sẵn" />
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="btn-primary" onclick="addProduct()">+ Thêm vào hóa đơn</button>
+          <button class="btn-light" onclick="clearProductInput()">Xóa ô nhập</button>
+        </div>
+
+        <p class="hint">Mẹo: sau khi nhập mã, bấm Enter để thêm sản phẩm nhanh. Có thể sửa số lượng và giá ngay trên bảng hóa đơn.</p>
+      </section>
+
+      <section class="card">
+        <h2>3. Hóa đơn bán hàng</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã</th>
+                <th>Tên sản phẩm</th>
+                <th>ĐVT</th>
+                <th class="right">SL</th>
+                <th class="right">Đơn giá</th>
+                <th class="right">Thành tiền</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="cartBody">
+              <tr><td colspan="8" class="empty">Chưa có sản phẩm</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="total-box">
+          <div>
+            <div class="form-row">
+              <div>
+                <label for="discount">Chiết khấu</label>
+                <input id="discount" type="number" min="0" value="0" oninput="renderCart()" />
+              </div>
+              <div>
+                <label for="paid">Đã thanh toán</label>
+                <input id="paid" type="number" min="0" value="0" oninput="renderCart()" />
+              </div>
+            </div>
+            <div class="btns">
+              <button class="btn-dark" onclick="printInvoice()">In / Lưu PDF</button>
+              <button class="btn-success" onclick="saveOrder()">Lưu đơn</button>
+              <button class="btn-light" onclick="loadLastOrder()">Mở đơn gần nhất</button>
+              <button class="btn-danger" onclick="newOrder()">Tạo đơn mới</button>
+            </div>
+            <p class="hint">Khi bấm <strong>In / Lưu PDF</strong>, chọn máy in hoặc chọn <strong>Save as PDF / Lưu dưới dạng PDF</strong> để gửi Zalo cho khách.</p>
+          </div>
+
+          <div class="summary">
+            <div class="sum-line"><span>Tạm tính</span><strong id="subtotalText">0đ</strong></div>
+            <div class="sum-line"><span>Chiết khấu</span><strong id="discountText">0đ</strong></div>
+            <div class="sum-line"><span>Đã thanh toán</span><strong id="paidText">0đ</strong></div>
+            <div class="sum-line"><span>Còn lại</span><strong id="debtText">0đ</strong></div>
+            <div class="sum-line"><span>Tổng tiền</span><strong id="grandText">0đ</strong></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="card" style="margin-top:16px;">
+      <h2>4. Danh mục sản phẩm mẫu</h2>
+      <p class="hint">Bạn có thể sửa danh sách sản phẩm trực tiếp trong phần code tại biến <strong>PRODUCTS</strong>. Sau này có thể nâng cấp thành nhập Excel hoặc quản lý bằng Google Sheet.</p>
+      <div class="catalog-list">
+        <table>
+          <thead>
+            <tr>
+              <th>Mã SP</th>
+              <th>Tên sản phẩm</th>
+              <th>ĐVT</th>
+              <th class="right">Giá bán</th>
+            </tr>
+          </thead>
+          <tbody id="catalogBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="invoice" id="invoicePrint">
+    <div class="invoice-inner">
+      <div class="invoice-head">
+        <div class="invoice-brand">
+          <h1>VŨ HOÀNG LIGHTING</h1>
+          <p>Chuyên đèn LED - đèn trang trí - ray nam châm - nguồn LED</p>
+          <p>Hotline: 0342 245 225</p>
+        </div>
+        <div class="invoice-meta">
+          <p><strong>Mã hóa đơn:</strong> <span id="printInvoiceId"></span></p>
+          <p><strong>Ngày:</strong> <span id="printDate"></span></p>
+          <p><strong>Hình thức:</strong> Bán hàng</p>
+        </div>
+      </div>
+
+      <div class="invoice-title">
+        <h2>HÓA ĐƠN BÁN HÀNG</h2>
+        <p class="small-muted">Cảm ơn quý khách đã tin tưởng và mua hàng</p>
+      </div>
+
+      <div class="customer-box">
+        <div><strong>Khách hàng:</strong> <span id="printCustomerName"></span></div>
+        <div><strong>SĐT:</strong> <span id="printCustomerPhone"></span></div>
+        <div style="grid-column: 1 / -1;"><strong>Địa chỉ:</strong> <span id="printCustomerAddress"></span></div>
+        <div style="grid-column: 1 / -1;"><strong>Ghi chú:</strong> <span id="printNote"></span></div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:45px;">STT</th>
+            <th style="width:90px;">Mã</th>
+            <th>Tên sản phẩm</th>
+            <th style="width:70px;">ĐVT</th>
+            <th style="width:60px;">SL</th>
+            <th style="width:110px;">Đơn giá</th>
+            <th style="width:120px;">Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody id="printCartBody"></tbody>
+      </table>
+
+      <div class="invoice-total">
+        <div><span>Tạm tính</span><strong id="printSubtotal"></strong></div>
+        <div><span>Chiết khấu</span><strong id="printDiscount"></strong></div>
+        <div><span>Đã thanh toán</span><strong id="printPaid"></strong></div>
+        <div><span>Còn lại</span><strong id="printDebt"></strong></div>
+        <div><span>Tổng tiền</span><strong id="printGrand"></strong></div>
+      </div>
+
+      <div class="signature">
+        <div>
+          <strong>Người mua hàng</strong>
+          <span>Ký, ghi rõ họ tên</span>
+        </div>
+        <div>
+          <strong>Người bán hàng</strong>
+          <span>Ký, ghi rõ họ tên</span>
+        </div>
+      </div>
+
+      <div class="thanks">VŨ HOÀNG LIGHTING - UY TÍN TẠO NIỀM TIN</div>
+    </div>
+  </div>
+
+  <script>
+    const PRODUCTS = [
+      { code: 'RAY48V-01', name: 'Đèn ray nam châm 48V', unit: 'Cái', price: 150000 },
+      { code: 'RAY48V-02', name: 'Thanh ray nam châm âm trần', unit: 'Mét', price: 180000 },
+      { code: 'LED12V-01', name: 'LED thanh nhôm nội thất 12V', unit: 'Mét', price: 65000 },
+      { code: 'LED24V-01', name: 'LED thanh nhôm nội thất 24V', unit: 'Mét', price: 75000 },
+      { code: 'LED-CUON-12V', name: 'LED cuộn 12V ánh sáng vàng', unit: 'Cuộn', price: 220000 },
+      { code: 'NGUON24V-10A', name: 'Nguồn LED 24V 10A', unit: 'Cái', price: 280000 },
+      { code: 'NGUON12V-10A', name: 'Nguồn LED 12V 10A', unit: 'Cái', price: 230000 },
+      { code: 'PANEL-600', name: 'Đèn panel 600x600', unit: 'Cái', price: 320000 },
+      { code: 'AMTRAN-7W', name: 'Đèn âm trần 7W', unit: 'Cái', price: 55000 },
+      { code: 'AMTRAN-12W', name: 'Đèn âm trần 12W', unit: 'Cái', price: 85000 },
+      { code: 'PHA-100W', name: 'Đèn pha LED 100W', unit: 'Cái', price: 260000 },
+      { code: 'PHA-200W', name: 'Đèn pha LED 200W', unit: 'Cái', price: 480000 },
+      { code: 'COTNHA-01', name: 'Đèn cột nhà ngoài trời', unit: 'Cái', price: 350000 },
+      { code: 'NHOM-U', name: 'Thanh nhôm chữ U gắn LED', unit: 'Mét', price: 45000 },
+      { code: 'SILICON-LED', name: 'Vỏ silicon LED neon', unit: 'Mét', price: 38000 }
+    ];
+
+    let cart = [];
+
+    const formatMoney = (value) => {
+      const number = Number(value || 0);
+      return number.toLocaleString('vi-VN') + 'đ';
+    };
+
+    const normalizeCode = (code) => String(code || '').trim().toUpperCase();
+
+    function findProduct(code) {
+      const key = normalizeCode(code);
+      return PRODUCTS.find(item => item.code === key);
+    }
+
+    function addProduct() {
+      const codeInput = document.getElementById('productCode');
+      const quantityInput = document.getElementById('quantity');
+      const customPriceInput = document.getElementById('customPrice');
+
+      const code = normalizeCode(codeInput.value);
+      const quantity = Number(quantityInput.value || 1);
+      const customPrice = customPriceInput.value === '' ? null : Number(customPriceInput.value);
+
+      if (!code) {
+        alert('Bạn chưa nhập mã sản phẩm.');
+        codeInput.focus();
+        return;
+      }
+
+      const product = findProduct(code);
+      if (!product) {
+        alert('Không tìm thấy mã sản phẩm: ' + code + '\nBạn hãy kiểm tra lại mã hoặc thêm sản phẩm vào danh mục PRODUCTS.');
+        codeInput.focus();
+        return;
+      }
+
+      if (quantity <= 0) {
+        alert('Số lượng phải lớn hơn 0.');
+        quantityInput.focus();
+        return;
+      }
+
+      const existed = cart.find(item => item.code === code && item.price === (customPrice || product.price));
+      if (existed) {
+        existed.quantity += quantity;
+      } else {
+        cart.push({
+          code: product.code,
+          name: product.name,
+          unit: product.unit,
+          quantity,
+          price: customPrice || product.price
+        });
+      }
+
+      clearProductInput();
+      renderCart();
+      codeInput.focus();
+    }
+
+    function clearProductInput() {
+      document.getElementById('productCode').value = '';
+      document.getElementById('quantity').value = 1;
+      document.getElementById('customPrice').value = '';
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    function updateItem(index, field, value) {
+      const numberValue = Number(value || 0);
+      cart[index][field] = numberValue < 0 ? 0 : numberValue;
+      renderCart();
+    }
+
+    function getTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + item.quantity * item.price, 0);
+      const discount = Number(document.getElementById('discount').value || 0);
+      const paid = Number(document.getElementById('paid').value || 0);
+      const grand = Math.max(subtotal - discount, 0);
+      const debt = Math.max(grand - paid, 0);
+      return { subtotal, discount, paid, grand, debt };
+    }
+
+    function renderCart() {
+      const body = document.getElementById('cartBody');
+      if (cart.length === 0) {
+        body.innerHTML = '<tr><td colspan="8" class="empty">Chưa có sản phẩm</td></tr>';
+      } else {
+        body.innerHTML = cart.map((item, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td><strong>${item.code}</strong></td>
+            <td>${item.name}</td>
+            <td>${item.unit}</td>
+            <td class="right"><input type="number" min="0" value="${item.quantity}" oninput="updateItem(${index}, 'quantity', this.value)" style="width:76px;text-align:right;"></td>
+            <td class="right"><input type="number" min="0" value="${item.price}" oninput="updateItem(${index}, 'price', this.value)" style="width:112px;text-align:right;"></td>
+            <td class="right"><strong>${formatMoney(item.quantity * item.price)}</strong></td>
+            <td class="center"><button class="btn-danger" onclick="removeItem(${index})" style="padding:8px 10px;">Xóa</button></td>
+          </tr>
+        `).join('');
+      }
+
+      const totals = getTotals();
+      document.getElementById('subtotalText').textContent = formatMoney(totals.subtotal);
+      document.getElementById('discountText').textContent = formatMoney(totals.discount);
+      document.getElementById('paidText').textContent = formatMoney(totals.paid);
+      document.getElementById('debtText').textContent = formatMoney(totals.debt);
+      document.getElementById('grandText').textContent = formatMoney(totals.grand);
+    }
+
+    function renderCatalog() {
+      const body = document.getElementById('catalogBody');
+      body.innerHTML = PRODUCTS.map(product => `
+        <tr>
+          <td><strong>${product.code}</strong></td>
+          <td>${product.name}</td>
+          <td>${product.unit}</td>
+          <td class="right">${formatMoney(product.price)}</td>
+        </tr>
+      `).join('');
+
+      const dataList = document.getElementById('productCodes');
+      dataList.innerHTML = PRODUCTS.map(product => `<option value="${product.code}">${product.name}</option>`).join('');
+    }
+
+    function preparePrintInvoice() {
+      const totals = getTotals();
+      const now = new Date();
+      const invoiceId = 'VH' + now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0') + String(now.getSeconds()).padStart(2, '0');
+
+      document.getElementById('printInvoiceId').textContent = invoiceId;
+      document.getElementById('printDate').textContent = now.toLocaleDateString('vi-VN') + ' ' + now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('printCustomerName').textContent = document.getElementById('customerName').value || '................................';
+      document.getElementById('printCustomerPhone').textContent = document.getElementById('customerPhone').value || '................................';
+      document.getElementById('printCustomerAddress').textContent = document.getElementById('customerAddress').value || '................................';
+      document.getElementById('printNote').textContent = document.getElementById('note').value || '';
+
+      document.getElementById('printCartBody').innerHTML = cart.map((item, index) => `
+        <tr>
+          <td class="center">${index + 1}</td>
+          <td>${item.code}</td>
+          <td>${item.name}</td>
+          <td class="center">${item.unit}</td>
+          <td class="right">${item.quantity}</td>
+          <td class="right">${formatMoney(item.price)}</td>
+          <td class="right"><strong>${formatMoney(item.quantity * item.price)}</strong></td>
+        </tr>
+      `).join('');
+
+      document.getElementById('printSubtotal').textContent = formatMoney(totals.subtotal);
+      document.getElementById('printDiscount').textContent = formatMoney(totals.discount);
+      document.getElementById('printPaid').textContent = formatMoney(totals.paid);
+      document.getElementById('printDebt').textContent = formatMoney(totals.debt);
+      document.getElementById('printGrand').textContent = formatMoney(totals.grand);
+    }
+
+    function printInvoice() {
+      if (cart.length === 0) {
+        alert('Hóa đơn chưa có sản phẩm.');
+        return;
+      }
+      preparePrintInvoice();
+      window.print();
+    }
+
+    function getOrderData() {
+      return {
+        customerName: document.getElementById('customerName').value,
+        customerPhone: document.getElementById('customerPhone').value,
+        customerAddress: document.getElementById('customerAddress').value,
+        note: document.getElementById('note').value,
+        discount: document.getElementById('discount').value,
+        paid: document.getElementById('paid').value,
+        cart
+      };
+    }
+
+    function saveOrder() {
+      if (cart.length === 0) {
+        alert('Chưa có sản phẩm để lưu đơn.');
+        return;
+      }
+      localStorage.setItem('vh_last_order', JSON.stringify(getOrderData()));
+      alert('Đã lưu đơn hàng gần nhất trên trình duyệt này.');
+    }
+
+    function loadLastOrder() {
+      const raw = localStorage.getItem('vh_last_order');
+      if (!raw) {
+        alert('Chưa có đơn đã lưu.');
+        return;
+      }
+      const data = JSON.parse(raw);
+      document.getElementById('customerName').value = data.customerName || '';
+      document.getElementById('customerPhone').value = data.customerPhone || '';
+      document.getElementById('customerAddress').value = data.customerAddress || '';
+      document.getElementById('note').value = data.note || '';
+      document.getElementById('discount').value = data.discount || 0;
+      document.getElementById('paid').value = data.paid || 0;
+      cart = data.cart || [];
+      renderCart();
+    }
+
+    function newOrder() {
+      const ok = confirm('Bạn có chắc muốn tạo đơn mới? Dữ liệu đang nhập sẽ bị xóa.');
+      if (!ok) return;
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
+      document.getElementById('customerAddress').value = '';
+      document.getElementById('note').value = '';
+      document.getElementById('discount').value = 0;
+      document.getElementById('paid').value = 0;
+      cart = [];
+      clearProductInput();
+      renderCart();
+    }
+
+    document.getElementById('productCode').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        addProduct();
+      }
+    });
+
+    renderCatalog();
+    renderCart();
+  </script>
+</body>
+</html>
