@@ -7,10 +7,220 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root { --primary:#f59e0b; --primary-dark:#b45309; --dark:#111827; --muted:#6b7280; --line:#e5e7eb; --bg:#f8fafc; --card:#fff; --danger:#dc2626; --success:#16a34a; --blue:#2563eb; }
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark)}
+    *{box-sizing:border-box} body{margin:0;font-family:Tahoma,'Segoe UI',Arial,Helvetica,sans-serif;background:var(--bg);color:var(--dark);font-variant-ligatures:none}
     .app{max-width:1200px;margin:0 auto;padding:16px}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px 20px;border-radius:22px;background:linear-gradient(135deg,#111827,#292524);color:#fff;box-shadow:0 12px 30px rgba(17,24,39,.18);margin-bottom:16px}.brand h1{margin:0;font-size:26px;letter-spacing:.5px}.brand p{margin:6px 0 0;color:#fde68a;font-size:14px}.shop-info{text-align:right;font-size:13px;line-height:1.6;color:#f9fafb}.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.tab-btn{background:#fff;color:#111827;border:1px solid var(--line);box-shadow:0 6px 14px rgba(15,23,42,.05)}.tab-btn.active{background:var(--primary);border-color:var(--primary)}.tab-page{display:none}.tab-page.active{display:block}.grid{display:grid;grid-template-columns:1fr 1.35fr;gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 10px 22px rgba(15,23,42,.06)}.card h2{margin:0 0 14px;font-size:18px}label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:15px;outline:none;background:#fff}input:focus,textarea:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(245,158,11,.16)}textarea{resize:vertical;min-height:72px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.form-row-3{display:grid;grid-template-columns:1.1fr .7fr .8fr;gap:12px;margin-bottom:12px}.form-row-4{display:grid;grid-template-columns:.8fr 1.4fr .6fr .8fr;gap:12px;margin-bottom:12px}.full{margin-bottom:12px}.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}button{border:0;border-radius:14px;padding:12px 15px;font-weight:800;cursor:pointer;font-size:14px}.btn-primary{background:var(--primary);color:#111827}.btn-dark{background:var(--dark);color:#fff}.btn-light{background:#f3f4f6;color:#111827;border:1px solid var(--line)}.btn-danger{background:#fee2e2;color:var(--danger)}.btn-success{background:#dcfce7;color:var(--success)}.btn-blue{background:#dbeafe;color:var(--blue)}.hint{color:var(--muted);font-size:13px;line-height:1.5;margin-top:8px}.notice{background:#fffbeb;border:1px dashed #f59e0b;color:#78350f;border-radius:14px;padding:10px 12px;margin-bottom:12px;font-size:13px;line-height:1.5}table{width:100%;border-collapse:collapse}th,td{border-bottom:1px solid var(--line);padding:10px 8px;font-size:14px;text-align:left;vertical-align:middle}th{background:#f9fafb;font-size:13px;color:#374151}.right{text-align:right}.center{text-align:center}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px}.total-box{margin-top:14px;display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}.summary{background:#f9fafb;border:1px solid var(--line);border-radius:16px;padding:14px}.sum-line{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed #d1d5db}.sum-line:last-child{border-bottom:0;font-size:20px;font-weight:900;color:var(--primary-dark)}.invoice{display:none;background:#fff;color:#111827}.invoice-inner{width:210mm;min-height:297mm;margin:0 auto;padding:12mm;background:#fff}.invoice-head{display:flex;justify-content:space-between;gap:16px;border-bottom:3px solid #111827;padding-bottom:12px}.invoice-brand h1{margin:0;font-size:28px}.invoice-brand p,.invoice-meta p{margin:4px 0;font-size:13px}.invoice-title{text-align:center;margin:18px 0 14px}.invoice-title h2{margin:0;font-size:24px}.customer-box{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;margin-bottom:14px;font-size:14px}.invoice table th,.invoice table td{border:1px solid #d1d5db;padding:8px;font-size:13px}.invoice table th{background:#f3f4f6}.invoice-total{width:340px;margin-left:auto;margin-top:12px;border:1px solid #d1d5db;border-radius:8px;overflow:hidden}.invoice-total div{display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid #d1d5db;font-size:14px}.invoice-total div:last-child{border-bottom:0;font-weight:900;font-size:18px}.signature{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;text-align:center;font-size:14px}.signature strong{display:block;margin-bottom:70px}.thanks{margin-top:20px;text-align:center;font-weight:700;color:#92400e}.small-muted{color:var(--muted);font-size:12px}.catalog-list{max-height:440px;overflow:auto;border:1px solid var(--line);border-radius:16px}.empty{text-align:center;color:var(--muted);padding:22px}.badge{display:inline-block;background:#f3f4f6;border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:12px;color:#374151}.login-wrap{min-height:100vh;display:grid;place-items:center;padding:16px}.login-card{max-width:460px;width:100%;background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 18px 40px rgba(15,23,42,.12)}.login-card h1{margin:0 0 8px;font-size:26px}.status{font-size:13px;color:#374151;background:#f9fafb;border:1px solid var(--line);border-radius:12px;padding:10px;margin:10px 0}.hidden{display:none!important}
     @media(max-width:900px){.grid,.total-box{grid-template-columns:1fr}.topbar{flex-direction:column;align-items:flex-start}.shop-info{text-align:left}.form-row,.form-row-3,.form-row-4{grid-template-columns:1fr}}
-    @media print{body{background:#fff}.app,.login-wrap{display:none!important}.invoice{display:block!important}.invoice-inner{width:auto;min-height:auto;padding:0}@page{size:A4;margin:12mm}}
+    @media print{body{background:#fff}.app,.login-wrap{display:none!important}.invoice{display:block!important}.invoice-inner{width:auto;min-height:auto;padding:0}@page{size:A5 portrait;margin:5mm}}
+
+
+    /* ===== TỐI ƯU HÓA ĐƠN IN PDF KHỔ A5 ===== */
+    .invoice-inner{
+      width:148mm !important;
+      min-height:210mm !important;
+      margin:0 auto !important;
+      padding:7mm !important;
+      background:#fff !important;
+      color:#111827 !important;
+      font-family:Tahoma,'Segoe UI',Arial,Helvetica,sans-serif !important;font-variant-ligatures:none !important;
+    }
+    .invoice-head{
+      display:flex !important;
+      justify-content:space-between !important;
+      align-items:flex-start !important;
+      gap:10mm !important;
+      border-bottom:2px solid #111827 !important;
+      padding-bottom:5mm !important;
+      margin-bottom:4mm !important;
+    }
+    .invoice-brand h1{
+      margin:0 0 1.5mm !important;
+      font-size:18pt !important;
+      line-height:1.1 !important;
+      letter-spacing:.2px !important;
+    }
+    .invoice-brand p,
+    .invoice-meta p{
+      margin:1mm 0 !important;
+      font-size:8.8pt !important;
+      line-height:1.25 !important;
+    }
+    .invoice-meta{
+      min-width:42mm !important;
+      text-align:right !important;
+      white-space:nowrap !important;
+    }
+    .invoice-title{
+      text-align:center !important;
+      margin:4mm 0 4mm !important;
+    }
+    .invoice-title h2{
+      margin:0 !important;
+      font-size:16pt !important;
+      line-height:1.15 !important;
+      letter-spacing:.2px !important;
+    }
+    .invoice-title p{
+      margin:1.5mm 0 0 !important;
+      font-size:8.2pt !important;
+    }
+    .customer-box{
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:2mm 7mm !important;
+      margin-bottom:4mm !important;
+      font-size:9.5pt !important;
+      line-height:1.35 !important;
+    }
+    .invoice table{
+      width:100% !important;
+      border-collapse:collapse !important;
+      table-layout:fixed !important;
+      margin-top:2mm !important;
+    }
+    .invoice table th,
+    .invoice table td{
+      border:1px solid #cbd5e1 !important;
+      padding:2mm 1.6mm !important;
+      font-size:8.7pt !important;
+      line-height:1.25 !important;
+      vertical-align:middle !important;
+      word-break:break-word !important;
+    }
+    .invoice table th{
+      background:#f3f4f6 !important;
+      font-weight:700 !important;
+    }
+    .invoice table th:nth-child(1),
+    .invoice table td:nth-child(1){width:9mm !important;text-align:center !important;}
+    .invoice table th:nth-child(2),
+    .invoice table td:nth-child(2){width:18mm !important;}
+    .invoice table th:nth-child(4),
+    .invoice table td:nth-child(4){width:12mm !important;text-align:center !important;}
+    .invoice table th:nth-child(5),
+    .invoice table td:nth-child(5){width:10mm !important;text-align:right !important;}
+    .invoice table th:nth-child(6),
+    .invoice table td:nth-child(6){width:20mm !important;text-align:right !important;}
+    .invoice table th:nth-child(7),
+    .invoice table td:nth-child(7){width:24mm !important;text-align:right !important;}
+    .invoice-pay-area{
+      display:grid !important;
+      grid-template-columns:1fr 60mm !important;
+      gap:4mm !important;
+      align-items:start !important;
+      margin-top:3mm !important;
+    }
+    .bank-qr-box{
+      width:100% !important;
+      border:1px solid #cbd5e1 !important;
+      border-radius:4px !important;
+      padding:3mm !important;
+      display:block !important;
+      page-break-inside:avoid !important;
+    }
+    .bank-qr-title{
+      font-size:9pt !important;
+      font-weight:800 !important;
+      margin-bottom:2mm !important;
+      display:block !important;
+    }
+    .bank-qr-content{display:flex !important;gap:3mm !important;align-items:flex-start !important;}
+    .bank-qr-box img{
+      width:32mm !important;
+      height:32mm !important;
+      object-fit:contain !important;
+      border:1px solid #e5e7eb !important;
+      border-radius:3px !important;
+      background:#fff !important;
+      flex:0 0 32mm !important;
+    }
+    .bank-info-lines{
+      display:flex !important;
+      flex-direction:column !important;
+      gap:2mm !important;
+      font-size:9pt !important;
+      line-height:1.35 !important;
+      justify-content:center !important;
+      min-height:32mm !important;
+    }
+    .bank-info-lines strong{min-width:22mm !important;display:inline-block !important;}
+    .invoice-total{
+      width:60mm !important;
+      margin-left:auto !important;
+      margin-top:3mm !important;
+      border:1px solid #cbd5e1 !important;
+      border-radius:4px !important;
+      overflow:hidden !important;
+      page-break-inside:avoid !important;
+    }
+    .invoice-total div{
+      display:flex !important;
+      justify-content:space-between !important;
+      align-items:center !important;
+      gap:5mm !important;
+      padding:2mm 2.5mm !important;
+      border-bottom:1px solid #cbd5e1 !important;
+      font-size:9pt !important;
+      line-height:1.25 !important;
+    }
+    .invoice-total div:last-child{
+      border-bottom:0 !important;
+      font-weight:900 !important;
+      font-size:13pt !important;
+      color:#111827 !important;
+      background:#fff7ed !important;
+    }
+    .signature{
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:16mm !important;
+      margin-top:8mm !important;
+      text-align:center !important;
+      font-size:9pt !important;
+      page-break-inside:avoid !important;
+    }
+    .signature strong{
+      display:block !important;
+      margin-bottom:18mm !important;
+      font-size:9.5pt !important;
+    }
+    .thanks{
+      margin-top:4mm !important;
+      text-align:center !important;
+      font-weight:800 !important;
+      font-size:9.5pt !important;
+      color:#92400e !important;
+      page-break-inside:avoid !important;
+    }
+    .small-muted{font-size:8.2pt !important;color:#6b7280 !important;}
+
+    @media print{
+      html,body{
+        width:148mm !important;
+        min-height:210mm !important;
+        background:#fff !important;
+        margin:0 !important;
+        padding:0 !important;
+        -webkit-print-color-adjust:exact !important;
+        print-color-adjust:exact !important;
+      }
+      .app,.login-wrap{display:none !important;}
+      .invoice{display:block !important;background:#fff !important;}
+      .invoice-inner{
+        width:148mm !important;
+        min-height:auto !important;
+        padding:6mm !important;
+        margin:0 auto !important;
+        box-shadow:none !important;
+      }
+      .invoice table tr,
+      .invoice-total,
+      .invoice-pay-area,
+      .bank-qr-box,
+      .signature,
+      .thanks{break-inside:avoid !important;page-break-inside:avoid !important;}
+      @page{size:A5 portrait;margin:5mm;}
+    }
+
   </style>
 </head>
 <body>
@@ -31,8 +241,8 @@
 
   <div id="mainApp" class="app hidden">
     <header class="topbar">
-      <div class="brand"><h1>VŨ HOÀNG LIGHTING</h1><p>Phần mềm bán hàng online - Supabase</p></div>
-      <div class="shop-info"><div><strong>Hotline:</strong> 0342 245 225</div><div><strong>Tài khoản:</strong> <span id="userEmail"></span></div><button class="btn-light" onclick="signOut()" style="margin-top:8px;padding:8px 12px;">Đăng xuất</button></div>
+      <div class="brand"><h1>VŨ HOÀNG LIGHTING</h1><p>Phần mềm bán hàng online </p></div>
+      <div class="shop-info"><div><strong>Hotline:</strong> 0877933362</div><div><strong>Tài khoản:</strong> <span id="userEmail"></span></div><button class="btn-light" onclick="signOut()" style="margin-top:8px;padding:8px 12px;">Đăng xuất</button></div>
     </header>
 
     <div class="tabs">
@@ -73,12 +283,31 @@
     </main>
   </div>
 
-  <div class="invoice" id="invoicePrint"><div class="invoice-inner"><div class="invoice-head"><div class="invoice-brand"><h1>VŨ HOÀNG LIGHTING</h1><p>Chuyên đèn LED - đèn trang trí - ray nam châm - nguồn LED</p><p>Hotline: 0342 245 225</p></div><div class="invoice-meta"><p><strong>Mã hóa đơn:</strong> <span id="printInvoiceId"></span></p><p><strong>Ngày:</strong> <span id="printDate"></span></p><p><strong>Hình thức:</strong> Bán hàng</p></div></div><div class="invoice-title"><h2>HÓA ĐƠN BÁN HÀNG</h2><p class="small-muted">Cảm ơn quý khách đã tin tưởng và mua hàng</p></div><div class="customer-box"><div><strong>Khách hàng:</strong> <span id="printCustomerName"></span></div><div><strong>SĐT:</strong> <span id="printCustomerPhone"></span></div><div style="grid-column:1/-1"><strong>Địa chỉ:</strong> <span id="printCustomerAddress"></span></div><div style="grid-column:1/-1"><strong>Ghi chú:</strong> <span id="printNote"></span></div></div><table><thead><tr><th style="width:45px">STT</th><th style="width:90px">Mã</th><th>Tên sản phẩm</th><th style="width:70px">ĐVT</th><th style="width:60px">SL</th><th style="width:110px">Đơn giá</th><th style="width:120px">Thành tiền</th></tr></thead><tbody id="printCartBody"></tbody></table><div class="invoice-total"><div><span>Tạm tính</span><strong id="printSubtotal"></strong></div><div><span>Chiết khấu</span><strong id="printDiscount"></strong></div><div><span>Phí vận chuyển</span><strong id="printShippingFee"></strong></div><div><span>Đã thanh toán</span><strong id="printPaid"></strong></div><div><span>Còn lại</span><strong id="printDebt"></strong></div><div><span>Tổng tiền</span><strong id="printGrand"></strong></div></div><div class="signature"><div><strong>Người mua hàng</strong><span>Ký, ghi rõ họ tên</span></div><div><strong>Người bán hàng</strong><span>Ký, ghi rõ họ tên</span></div></div><div class="thanks">VŨ HOÀNG LIGHTING - UY TÍN TẠO NIỀM TIN</div></div></div>
+  <div class="invoice" id="invoicePrint"><div class="invoice-inner"><div class="invoice-head"><div class="invoice-brand"><h1>VŨ HOÀNG LIGHTING</h1><p>Cung cấp Ray Nam Châm - Nhôm Định Hình- Nguồn 12V/24V - Đèn Trang Trí - Quạt Trần - LED 12V/24V/220V </p><p>Hotline: 08779 333 62</p></div><div class="invoice-meta"><p><strong>Mã hóa đơn:</strong> <span id="printInvoiceId"></span></p><p><strong>Ngày:</strong> <span id="printDate"></span></p><p><strong>Hình thức:</strong> Bán hàng</p></div></div><div class="invoice-title"><h2>HÓA ĐƠN BÁN HÀNG</h2><p class="small-muted">Cảm ơn quý khách đã tin tưởng và mua hàng</p></div><div class="customer-box"><div><strong>Khách hàng:</strong> <span id="printCustomerName"></span></div><div><strong>SĐT:</strong> <span id="printCustomerPhone"></span></div><div style="grid-column:1/-1"><strong>Địa chỉ:</strong> <span id="printCustomerAddress"></span></div><div style="grid-column:1/-1"><strong>Ghi chú:</strong> <span id="printNote"></span></div></div><table><thead><tr><th style="width:45px">STT</th><th style="width:90px">Mã</th><th>Tên sản phẩm</th><th style="width:70px">ĐVT</th><th style="width:60px">SL</th><th style="width:110px">Đơn giá</th><th style="width:120px">Thành tiền</th></tr></thead><tbody id="printCartBody"></tbody></table><div class="invoice-pay-area">
+<div class="bank-qr-box">
+  <div class="bank-qr-title">Quét QR thanh toán</div>
+  <div class="bank-qr-content">
+  <img id="bankQrImage" alt="QR ngân hàng" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <div class="bank-info-lines">
+    <div><strong>STK:</strong> <span id="printBankAccount"></span></div>
+    <div><strong>CTK:</strong> <span id="printBankHolder"></span></div>
+    <div><strong>Ngân hàng:</strong> <span id="printBankName"></span></div>
+  </div>
+  </div>
+</div>
+<div class="invoice-total"><div><span>Tạm tính</span><strong id="printSubtotal"></strong></div><div><span>Chiết khấu</span><strong id="printDiscount"></strong></div><div><span>Phí vận chuyển</span><strong id="printShippingFee"></strong></div><div><span>Đã thanh toán</span><strong id="printPaid"></strong></div><div><span>Còn lại</span><strong id="printDebt"></strong></div><div><span>Tổng tiền</span><strong id="printGrand"></strong></div></div>
+</div><div class="signature"><div><strong></strong><span></span></div><div><strong></strong><span></span></div></div><div class="thanks">VŨ HOÀNG LIGHTING - UY TÍN TẠO NIỀM TIN</div></div></div>
 
   <script>
     // ===== CONFIG SUPABASE - DÁN THÔNG TIN CỦA BẠN VÀO ĐÂY =====
    const SUPABASE_URL = 'https://dujqgffrpyqewtobjfag.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_qCCWvQH0rKCnVqRNjDGnBw_RVt-I8TD';
+    const BANK_INFO = {
+      bankName: 'VP BANK',
+      accountNo: '5577626198',
+      accountName: 'HKD HOANG VU LIGHTING',
+      qrImage: './img/qr.jpg'
+    };
     // ============================================================
 
     const isConfigured = SUPABASE_URL.startsWith('https://') && !SUPABASE_KEY.includes('DAN_SUPABASE');
@@ -256,6 +485,7 @@
     function preparePrintInvoice(){
       const t=getTotals(); const now=new Date(); const invoiceNo=currentInvoiceNo || makeInvoiceNo(); currentInvoiceNo=invoiceNo;
       document.getElementById('printInvoiceId').textContent=invoiceNo; document.getElementById('printDate').textContent=now.toLocaleDateString('vi-VN')+' '+now.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}); document.getElementById('printCustomerName').textContent=document.getElementById('customerName').value||'................................'; document.getElementById('printCustomerPhone').textContent=document.getElementById('customerPhone').value||'................................'; document.getElementById('printCustomerAddress').textContent=document.getElementById('customerAddress').value||'................................'; document.getElementById('printNote').textContent=document.getElementById('note').value||'';
+      document.getElementById('printBankAccount').textContent = BANK_INFO.accountNo; document.getElementById('printBankHolder').textContent = BANK_INFO.accountName; document.getElementById('printBankName').textContent = BANK_INFO.bankName; document.getElementById('bankQrImage').src = BANK_INFO.qrImage;
       document.getElementById('printCartBody').innerHTML=cart.map((i,idx)=>`<tr><td class="center">${idx+1}</td><td>${i.code}</td><td>${i.name}</td><td class="center">${i.unit}</td><td class="right">${i.quantity}</td><td class="right">${formatMoney(i.price)}</td><td class="right"><strong>${formatMoney(i.quantity*i.price)}</strong></td></tr>`).join('');
       ['subtotal','discount','shippingFee','paid','debt','grand'].forEach(k=>document.getElementById('print'+k.charAt(0).toUpperCase()+k.slice(1)).textContent=formatMoney(t[k]));
     }
