@@ -269,6 +269,128 @@
       padding-bottom:8px !important;
     }
 
+  
+    /* ===== BỐ CỤC HÓA ĐƠN ĐẸP HƠN: QR TRÁI - TỔNG TIỀN PHẢI - CHỮ KÝ GỌN ===== */
+    .invoice-pay-area{
+      display:grid !important;
+      grid-template-columns:72mm 1fr !important;
+      gap:4mm !important;
+      align-items:start !important;
+      margin-top:3mm !important;
+    }
+    .bank-qr-box{
+      width:72mm !important;
+      min-height:43mm !important;
+      margin:0 !important;
+      border:1px solid #cbd5e1 !important;
+      border-radius:5px !important;
+      padding:3mm !important;
+      background:#fff !important;
+    }
+    .bank-qr-title{
+      font-size:9pt !important;
+      font-weight:800 !important;
+      margin:0 0 2mm !important;
+      line-height:1.2 !important;
+    }
+    .bank-qr-content{
+      display:grid !important;
+      grid-template-columns:34mm 1fr !important;
+      gap:4mm !important;
+      align-items:center !important;
+    }
+    .bank-info-lines{
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:center !important;
+      gap:1.6mm !important;
+      min-height:34mm !important;
+      font-size:8.8pt !important;
+      line-height:1.25 !important;
+    }
+    .bank-info-lines strong{
+      display:inline-block !important;
+      min-width:16mm !important;
+      font-weight:800 !important;
+    }
+
+    .invoice-total{
+      width:100% !important;
+      margin:0 !important;
+      border:1px solid #cbd5e1 !important;
+      border-radius:5px !important;
+      overflow:hidden !important;
+      background:#fff !important;
+    }
+    .invoice-total div{
+      display:flex !important;
+      justify-content:space-between !important;
+      align-items:center !important;
+      gap:4mm !important;
+      padding:2.2mm 2.8mm !important;
+      border-bottom:1px solid #cbd5e1 !important;
+      font-size:8.9pt !important;
+      line-height:1.25 !important;
+    }
+    .invoice-total div strong{
+      font-weight:800 !important;
+    }
+    .invoice-total div:last-child{
+      background:#fff7ed !important;
+      font-size:12.5pt !important;
+      font-weight:900 !important;
+      color:#111827 !important;
+    }
+
+    .signature{
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:14mm !important;
+      margin-top:8mm !important;
+      align-items:start !important;
+      text-align:center !important;
+      page-break-inside:avoid !important;
+    }
+    .sign-box{
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+    }
+    .sign-title{
+      font-weight:800 !important;
+      font-size:9pt !important;
+      color:#111827 !important;
+      margin-bottom:1.5mm !important;
+    }
+    .sign-note{
+      font-size:8.3pt !important;
+      color:#4b5563 !important;
+      margin-bottom:18mm !important;
+    }
+    .sign-space{
+      width:100% !important;
+      border-bottom:1px dashed #9ca3af !important;
+      height:0 !important;
+    }
+    .thanks{
+      margin-top:5mm !important;
+      text-align:center !important;
+      font-weight:800 !important;
+      font-size:9.5pt !important;
+      color:#92400e !important;
+    }
+
+    @media print{
+      .invoice-pay-area,
+      .bank-qr-box,
+      .invoice-total,
+      .signature,
+      .thanks{
+        break-inside:avoid !important;
+        page-break-inside:avoid !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -377,7 +499,18 @@
   </div>
 </div>
 <div class="invoice-total"><div><span>Tạm tính</span><strong id="printSubtotal"></strong></div><div><span>Chiết khấu</span><strong id="printDiscount"></strong></div><div><span>Phí vận chuyển</span><strong id="printShippingFee"></strong></div><div><span>Đã thanh toán</span><strong id="printPaid"></strong></div><div><span>Còn lại</span><strong id="printDebt"></strong></div><div><span>Tổng tiền</span><strong id="printGrand"></strong></div></div>
-</div><div class="signature"><div><strong></strong><span></span></div><div><strong></strong><span></span></div></div><div class="thanks">VŨ HOÀNG LIGHTING - UY TÍN TẠO NIỀM TIN</div></div></div>
+</div><div class="signature">
+      <div class="sign-box">
+        <div class="sign-title">Người mua hàng</div>
+        <div class="sign-note">Ký, ghi rõ họ tên</div>
+        <div class="sign-space"></div>
+      </div>
+      <div class="sign-box">
+        <div class="sign-title">Người bán hàng</div>
+        <div class="sign-note">Ký, ghi rõ họ tên</div>
+        <div class="sign-space"></div>
+      </div>
+    </div><div class="thanks">VŨ HOÀNG LIGHTING - UY TÍN TẠO NIỀM TIN</div></div></div>
 
   <script>
     // ===== CONFIG SUPABASE - DÁN THÔNG TIN CỦA BẠN VÀO ĐÂY =====
