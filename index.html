@@ -803,6 +803,47 @@
       .signature{display:none !important;}
     }
 
+  
+    /* ===== FINAL: XÓA HOÀN TOÀN CHỮ KÝ TRÊN HÓA ĐƠN ===== */
+    .signature,
+    .sign-box,
+    .sign-title,
+    .sign-note,
+    .sign-space{
+      display:none !important;
+      visibility:hidden !important;
+      height:0 !important;
+      min-height:0 !important;
+      max-height:0 !important;
+      margin:0 !important;
+      padding:0 !important;
+      border:0 !important;
+      overflow:hidden !important;
+    }
+    .thanks{
+      margin-top:6mm !important;
+      text-align:center !important;
+      font-weight:800 !important;
+      font-size:9.5pt !important;
+      color:#92400e !important;
+      page-break-inside:avoid !important;
+    }
+    @media print{
+      .signature,
+      .sign-box,
+      .sign-title,
+      .sign-note,
+      .sign-space{
+        display:none !important;
+        visibility:hidden !important;
+        height:0 !important;
+        margin:0 !important;
+        padding:0 !important;
+        border:0 !important;
+        overflow:hidden !important;
+      }
+    }
+
   </style>
 </head>
 <body>
