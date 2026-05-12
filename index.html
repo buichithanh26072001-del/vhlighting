@@ -316,6 +316,82 @@
       }
     }
 
+  
+    /* ===== FIX QR HIỂN THỊ CHẮC CHẮN ===== */
+    .invoice-pay-area{
+      display:grid !important;
+      grid-template-columns:72mm 1fr !important;
+      gap:4mm !important;
+      align-items:start !important;
+      margin-top:3mm !important;
+    }
+    .bank-qr-box{
+      width:72mm !important;
+      min-height:44mm !important;
+      border:1px solid #cbd5e1 !important;
+      border-radius:5px !important;
+      padding:3mm !important;
+      background:#fff !important;
+      page-break-inside:avoid !important;
+    }
+    .bank-qr-title{
+      font-size:9pt !important;
+      font-weight:800 !important;
+      margin:0 0 2mm !important;
+      line-height:1.2 !important;
+    }
+    .bank-qr-content{
+      display:grid !important;
+      grid-template-columns:34mm 1fr !important;
+      gap:4mm !important;
+      align-items:center !important;
+    }
+    .bank-qr-frame{
+      width:34mm !important;
+      height:34mm !important;
+      border:1px solid #111827 !important;
+      border-radius:3px !important;
+      background:#fff !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      overflow:hidden !important;
+    }
+    .bank-qr-frame img{
+      width:32mm !important;
+      height:32mm !important;
+      max-width:32mm !important;
+      max-height:32mm !important;
+      object-fit:contain !important;
+      display:block !important;
+      opacity:1 !important;
+      visibility:visible !important;
+      border:0 !important;
+      background:#fff !important;
+    }
+    .bank-info-lines{
+      min-height:34mm !important;
+      display:flex !important;
+      flex-direction:column !important;
+      justify-content:center !important;
+      gap:1.8mm !important;
+      font-size:8.7pt !important;
+      line-height:1.25 !important;
+    }
+    .bank-info-lines strong{
+      min-width:17mm !important;
+      display:inline-block !important;
+      font-weight:800 !important;
+    }
+    @media print{
+      .bank-qr-frame,
+      .bank-qr-box,
+      .invoice-pay-area{
+        break-inside:avoid !important;
+        page-break-inside:avoid !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -416,11 +492,14 @@
 <div class="bank-qr-box">
   <div class="bank-qr-title">Quét QR thanh toán</div>
   <div class="bank-qr-content">
-  <div class="bank-qr-frame"><img id="bankQrImage" alt="QR ngân hàng" crossorigin="anonymous" referrerpolicy="no-referrer" /></div>
-  <div class="bank-info-lines">
-    <div><strong>STK:</strong> <span id="printBankAccount"></span></div>
-    <div><strong>CTK:</strong> <span id="printBankHolder"></span></div>
-    <div><strong>Ngân hàng:</strong> <span id="printBankName"></span></div>
+    <div class="bank-qr-frame">
+      <img id="bankQrImage" src="./img/qr.jpg" alt="QR ngân hàng" />
+    </div>
+    <div class="bank-info-lines">
+      <div><strong>STK:</strong> <span id="printBankAccount"></span></div>
+      <div><strong>CTK:</strong> <span id="printBankHolder"></span></div>
+      <div><strong>Ngân hàng:</strong> <span id="printBankName"></span></div>
+    </div>
   </div>
   </div>
 </div>
@@ -782,7 +861,8 @@
     function preparePrintInvoice(){
       const t=getTotals(); const now=new Date(); const invoiceNo=currentInvoiceNo || makeInvoiceNo(); currentInvoiceNo=invoiceNo;
       document.getElementById('printInvoiceId').textContent=invoiceNo; document.getElementById('printDate').textContent=now.toLocaleDateString('vi-VN')+' '+now.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}); document.getElementById('printCustomerName').textContent=document.getElementById('customerName').value||'................................'; document.getElementById('printCustomerPhone').textContent=document.getElementById('customerPhone').value||'................................'; document.getElementById('printCustomerAddress').textContent=document.getElementById('customerAddress').value||'................................'; document.getElementById('printNote').textContent=document.getElementById('note').value||'';
-      document.getElementById('printBankAccount').textContent = BANK_INFO.accountNo; document.getElementById('printBankHolder').textContent = BANK_INFO.accountName; document.getElementById('printBankName').textContent = BANK_INFO.bankName; const qrImg = document.getElementById('bankQrImage'); qrImg.src = BANK_INFO.qrImage; qrImg.onerror = () => alert('Không tìm thấy ảnh QR: ' + BANK_INFO.qrImage + '\nHãy kiểm tra file qr.jpg đã nằm đúng trong thư mục img chưa.');
+      document.getElementById('printBankAccount').textContent = BANK_INFO.accountNo; document.getElementById('printBankHolder').textContent = BANK_INFO.accountName; document.getElementById('printBankName').textContent = BANK_INFO.bankName; const qrImg = document.getElementById('bankQrImage'); qrImg.src = BANK_INFO.qrImage + '?v=' + Date.now(); qrImg.onerror = () => alert('Không tìm thấy ảnh QR: ' + BANK_INFO.qrImage + '
+Hãy kiểm tra file qr.jpg đã nằm đúng trong thư mục img chưa.');
       document.getElementById('printCartBody').innerHTML=cart.map((i,idx)=>`<tr><td class="center">${idx+1}</td><td>${i.code}</td><td>${i.name}</td><td class="center">${i.unit}</td><td class="right">${i.quantity}</td><td class="right">${formatMoney(i.price)}</td><td class="right"><strong>${formatMoney(i.quantity*i.price)}</strong></td></tr>`).join('');
       ['subtotal','discount','shippingFee','paid','debt','grand'].forEach(k=>document.getElementById('print'+k.charAt(0).toUpperCase()+k.slice(1)).textContent=formatMoney(t[k]));
     }
