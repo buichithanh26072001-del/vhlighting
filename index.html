@@ -844,6 +844,17 @@
       }
     }
 
+  
+    /* ===== GỢI Ý SẢN PHẨM THEO MÃ NHÓM ===== */
+    .product-options{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;display:none}
+    .product-options.active{display:block}
+    .product-option-head{padding:10px 12px;background:#fffbeb;color:#78350f;font-weight:800;border-bottom:1px solid var(--line);font-size:13px}
+    .product-option-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+    .product-option-item:last-child{border-bottom:0}
+    .product-option-item strong{display:block;margin-bottom:3px}
+    .product-option-item span{font-size:13px;color:var(--muted)}
+    .product-option-item button{padding:8px 10px;border-radius:10px}
+
   </style>
 </head>
 <body>
@@ -886,7 +897,7 @@
           <h2>2. Nhập mã sản phẩm</h2>
           <div class="notice"><strong>Online:</strong> sản phẩm được lấy từ Supabase. Thêm sản phẩm ở mục Quản lý sản phẩm, máy tính và điện thoại đều dùng chung.</div>
           <div class="form-row-3"><div><label>Mã sản phẩm</label><input id="productCode" placeholder="Nhập mã hoặc quét mã" list="productCodes" /><datalist id="productCodes"></datalist></div><div><label>Số lượng</label><input id="quantity" type="number" min="1" value="1" /></div><div><label>Giá tùy chỉnh</label><input id="customPrice" type="number" min="0" placeholder="Bỏ trống nếu lấy giá sẵn" /></div></div>
-          <div class="btns"><button class="btn-primary" onclick="addProductToCart()">+ Thêm vào hóa đơn</button><button class="btn-light" onclick="clearProductInput()">Xóa ô nhập</button><button class="btn-blue" onclick="openTab('products')">+ Thêm mã mới</button></div>
+          <div class="btns"><button class="btn-primary" onclick="addProductToCart()">+ Thêm vào hóa đơn</button><button class="btn-light" onclick="clearProductInput()">Xóa ô nhập</button><button class="btn-blue" onclick="openTab('products')">+ Thêm mã mới</button></div><div id="productOptions" class="product-options"></div>
           <p class="hint">Mẹo: nhập mã rồi bấm Enter để thêm sản phẩm nhanh.</p>
         </section>
 
@@ -899,7 +910,7 @@
     </main>
 
     <main id="productsPage" class="tab-page">
-      <section class="card"><h2>Quản lý sản phẩm online</h2><input type="hidden" id="editingProductId" /><div class="form-row-4"><div><label>Mã sản phẩm</label><input id="pmCode" placeholder="VD: RAY48V-01" /></div><div><label>Tên sản phẩm</label><input id="pmName" placeholder="VD: Đèn ray nam châm 48V" /></div><div><label>ĐVT</label><input id="pmUnit" placeholder="Cái / Mét / Bộ" /></div><div><label>Giá bán</label><input id="pmPrice" type="number" min="0" placeholder="VD: 150000" /></div></div><div class="btns"><button class="btn-primary" onclick="saveProductOnline()" id="saveProductBtn">Lưu sản phẩm online</button><button class="btn-light" onclick="resetProductForm()">Nhập mới</button><button class="btn-blue" onclick="loadProductsOnline()">Tải lại dữ liệu</button></div><p class="hint">Sản phẩm lưu online. Mở điện thoại hoặc máy tính đều thấy chung danh mục.</p></section>
+      <section class="card"><h2>Quản lý sản phẩm online</h2><input type="hidden" id="editingProductId" /><div class="form-row-4"><div><label>Mã sản phẩm</label><input id="pmCode" placeholder="VD: RAY48V-01" /></div><div><label>Tên sản phẩm</label><input id="pmName" placeholder="VD: Đèn ray nam châm 48V" /></div><div><label>ĐVT</label><input id="pmUnit" placeholder="Cái / Mét / Bộ" /></div><div><label>Giá bán</label><input id="pmPrice" type="number" min="0" placeholder="VD: 150000" /></div></div><div class="form-row"><div><label>Mã nhóm</label><input id="pmGroupCode" placeholder="VD: RNC" /></div><div><label>Gợi ý</label><input readonly value="Nhập mã nhóm chung, ví dụ RNC" /></div></div><div class="btns"><button class="btn-primary" onclick="saveProductOnline()" id="saveProductBtn">Lưu sản phẩm online</button><button class="btn-light" onclick="resetProductForm()">Nhập mới</button><button class="btn-blue" onclick="loadProductsOnline()">Tải lại dữ liệu</button></div><p class="hint">Sản phẩm lưu online. Mở điện thoại hoặc máy tính đều thấy chung danh mục.</p></section>
       <section class="card" style="margin-top:16px"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px"><h2 style="margin:0">Danh mục sản phẩm <span class="badge" id="productCount">0 sản phẩm</span></h2><div style="min-width:260px"><input id="searchProduct" placeholder="Tìm mã hoặc tên sản phẩm..." oninput="renderProductManager()" /></div></div><div class="catalog-list"><table><thead><tr><th>Mã SP</th><th>Tên sản phẩm</th><th>ĐVT</th><th class="right">Giá bán</th><th class="center">Thao tác</th></tr></thead><tbody id="productManagerBody"></tbody></table></div></section>
     </main>
 
@@ -1180,7 +1191,43 @@
     }
 
     function findProduct(code){ return products.find(p => p.code === normalizeCode(code)); }
-    function refreshProductCodeList(){ document.getElementById('productCodes').innerHTML = products.map(p=>`<option value="${p.code}">${p.name}</option>`).join(''); }
+
+    function getProductGroupCode(p){
+      return normalizeCode(p.group_code || p.groupCode || '');
+    }
+
+    function findProductMatches(input){
+      const key = normalizeCode(input);
+      if(!key) return [];
+
+      // Ưu tiên 1: nếu gõ đúng mã nhóm, chỉ hiện toàn bộ sản phẩm thuộc nhóm đó.
+      const exactGroup = products.filter(p => getProductGroupCode(p) === key);
+      if(exactGroup.length) return exactGroup;
+
+      // Ưu tiên 2: nếu gõ đúng mã sản phẩm và mã này có nhiều dòng, hiện toàn bộ dòng cùng mã.
+      const exactCode = products.filter(p => p.code === key);
+      if(exactCode.length) return exactCode;
+
+      // Ưu tiên 3: gõ gần đúng. Ví dụ gõ RNC sẽ hiện nhóm RNCN, RNCC, RNC...
+      return products.filter(p => getProductGroupCode(p).startsWith(key) || p.code.startsWith(key));
+    }
+
+    function refreshProductCodeList(){
+      const used = new Set();
+      const values = [];
+      products.forEach(p => {
+        const group = getProductGroupCode(p);
+        if(group && !used.has(group)){
+          used.add(group);
+          values.push(`<option value="${group}">Mã nhóm</option>`);
+        }
+        if(p.code && !used.has(p.code)){
+          used.add(p.code);
+          values.push(`<option value="${p.code}">${p.name}</option>`);
+        }
+      });
+      document.getElementById('productCodes').innerHTML = values.join('');
+    }
 
     function renderProductManager(){
       const keyword = normalizeCode(document.getElementById('searchProduct').value);
@@ -1193,7 +1240,7 @@
 
     async function saveProductOnline(){
       const id = document.getElementById('editingProductId').value;
-      const item = { code: normalizeCode(document.getElementById('pmCode').value), name: document.getElementById('pmName').value.trim(), unit: document.getElementById('pmUnit').value.trim() || 'Cái', price: Number(document.getElementById('pmPrice').value || 0) };
+      const item = { code: normalizeCode(document.getElementById('pmCode').value), group_code: normalizeCode(document.getElementById('pmGroupCode').value), name: document.getElementById('pmName').value.trim(), unit: document.getElementById('pmUnit').value.trim() || 'Cái', price: Number(document.getElementById('pmPrice').value || 0) };
       if(!item.code) return alert('Bạn chưa nhập mã sản phẩm.');
       if(!item.name) return alert('Bạn chưa nhập tên sản phẩm.');
       if(item.price <= 0) return alert('Giá bán phải lớn hơn 0.');
@@ -1207,7 +1254,7 @@
     function editProduct(id){
       const p = products.find(x=>x.id===id); if(!p) return;
       document.getElementById('editingProductId').value = p.id;
-      document.getElementById('pmCode').value = p.code; document.getElementById('pmName').value = p.name; document.getElementById('pmUnit').value = p.unit; document.getElementById('pmPrice').value = p.price;
+      document.getElementById('pmCode').value = p.code; document.getElementById('pmGroupCode').value = p.group_code || ''; document.getElementById('pmName').value = p.name; document.getElementById('pmUnit').value = p.unit; document.getElementById('pmPrice').value = p.price;
       document.getElementById('saveProductBtn').textContent = 'Cập nhật sản phẩm online'; window.scrollTo({top:0,behavior:'smooth'});
     }
 
@@ -1220,20 +1267,68 @@
     }
 
     function resetProductForm(){
-      document.getElementById('editingProductId').value=''; document.getElementById('pmCode').value=''; document.getElementById('pmName').value=''; document.getElementById('pmUnit').value=''; document.getElementById('pmPrice').value=''; document.getElementById('saveProductBtn').textContent='Lưu sản phẩm online';
+      document.getElementById('editingProductId').value=''; document.getElementById('pmCode').value=''; document.getElementById('pmGroupCode').value=''; document.getElementById('pmName').value=''; document.getElementById('pmUnit').value=''; document.getElementById('pmPrice').value=''; document.getElementById('saveProductBtn').textContent='Lưu sản phẩm online';
+    }
+
+    function renderProductOptions(matches){
+      const box = document.getElementById('productOptions');
+      if(!box) return;
+      if(!matches.length){
+        box.classList.remove('active');
+        box.innerHTML = '';
+        return;
+      }
+
+      box.classList.add('active');
+      box.innerHTML = `<div class="product-option-head">Tìm thấy ${matches.length} sản phẩm. Chọn sản phẩm cần thêm:</div>` + matches.map(p => `
+        <div class="product-option-item">
+          <div>
+            <strong>${p.name}</strong>
+            <span>Mã SP: ${p.code}${p.group_code ? ' · Nhóm: '+p.group_code : ''} · ĐVT: ${p.unit} · Giá: ${formatMoney(p.price)}</span>
+          </div>
+          <button class="btn-primary" onclick="addSelectedProductToCart('${p.id}')">Thêm</button>
+        </div>
+      `).join('');
+    }
+
+    function addSelectedProductToCart(productId){
+      const product = products.find(p => p.id === productId);
+      if(!product) return alert('Không tìm thấy sản phẩm.');
+      const qty = Number(document.getElementById('quantity').value || 1);
+      const custom = document.getElementById('customPrice').value;
+      if(qty <= 0) return alert('Số lượng phải lớn hơn 0.');
+      const price = custom === '' ? Number(product.price) : Number(custom);
+      const existed = cart.find(i => i.code === product.code && i.name === product.name && i.price === price);
+      if(existed) existed.quantity += qty;
+      else cart.push({ code:product.code, name:product.name, unit:product.unit, quantity:qty, price });
+      clearProductInput();
+      renderCart();
+      document.getElementById('productCode').focus();
     }
 
     function addProductToCart(){
-      const code = normalizeCode(document.getElementById('productCode').value); const qty = Number(document.getElementById('quantity').value || 1); const custom = document.getElementById('customPrice').value; const product = findProduct(code);
-      if(!code) return alert('Bạn chưa nhập mã sản phẩm.');
-      if(!product){ if(confirm('Không tìm thấy mã. Sang Quản lý sản phẩm để thêm?')){ openTab('products'); document.getElementById('pmCode').value=code; } return; }
-      if(qty <= 0) return alert('Số lượng phải lớn hơn 0.');
-      const price = custom === '' ? Number(product.price) : Number(custom); const existed = cart.find(i => i.code===code && i.price===price);
-      if(existed) existed.quantity += qty; else cart.push({ code:product.code, name:product.name, unit:product.unit, quantity:qty, price });
-      clearProductInput(); renderCart(); document.getElementById('productCode').focus();
+      const code = normalizeCode(document.getElementById('productCode').value);
+      if(!code) return alert('Bạn chưa nhập mã sản phẩm hoặc mã nhóm.');
+      const matches = findProductMatches(code);
+
+      if(!matches.length){
+        if(confirm('Không tìm thấy mã này. Sang Quản lý sản phẩm để thêm?')){
+          openTab('products');
+          document.getElementById('pmGroupCode').value = code;
+        }
+        return;
+      }
+
+      // Luôn hiện danh sách để chọn khi nhập mã nhóm/mã có nhiều sản phẩm
+      if(matches.length > 1){
+        renderProductOptions(matches);
+        return;
+      }
+
+      addSelectedProductToCart(matches[0].id);
     }
 
-    function clearProductInput(){ document.getElementById('productCode').value=''; document.getElementById('quantity').value=1; document.getElementById('customPrice').value=''; }
+    function clearProductInput(){ document.getElementById('productCode').value=''; document.getElementById('quantity').value=1; document.getElementById('customPrice').value=''; const box=document.getElementById('productOptions'); if(box){ box.classList.remove('active'); box.innerHTML=''; } }
     function removeItem(i){ cart.splice(i,1); renderCart(); }
     function updateItem(i, field, value){ cart[i][field] = Math.max(Number(value || 0),0); renderCart(); }
     function getTotals(){ const subtotal=cart.reduce((s,i)=>s+i.quantity*i.price,0); const discount=Number(document.getElementById('discount').value||0); const shippingFee=Number(document.getElementById('shippingFee').value||0); const paid=Number(document.getElementById('paid').value||0); const grand=Math.max(subtotal-discount+shippingFee,0); const debt=Math.max(grand-paid,0); return {subtotal,discount,shippingFee,paid,grand,debt}; }
@@ -1291,6 +1386,14 @@
 
     document.getElementById('customerName').addEventListener('change', fillCustomerInfoByName);
     document.getElementById('customerName').addEventListener('blur', fillCustomerInfoByName);
+    document.getElementById('productCode').addEventListener('input', e=>{
+      const matches = findProductMatches(e.target.value);
+      if(matches.length > 1) renderProductOptions(matches);
+      else {
+        const box = document.getElementById('productOptions');
+        if(box){ box.classList.remove('active'); box.innerHTML=''; }
+      }
+    });
     document.getElementById('productCode').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); addProductToCart(); } });
     document.getElementById('pmPrice').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); saveProductOnline(); } });
     initAuth();
